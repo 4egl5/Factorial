@@ -2,6 +2,10 @@
 A program calculate factorial less likely fuck up by overflow
 ## Implementation
 vector store the each digit of a integer and do the calculation using recursion.
+## Compile
+```
+g++ helper_function.hpp factorial.cpp -o factorial
+```
 ## Usecase
 ```
 ./factorial
