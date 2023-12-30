@@ -13,5 +13,5 @@ g++ helper_function.hpp factorial.cpp -o factorial
 and input the non-negative integer. 
 
 ## issue
-- May overflow when input >2^31-1 digits integer (Using signed int + the flat function run after the for loop)
+- May overflow when input >$2^{31}-1$ digits integer (Using signed int + the flat function run after the for loop)
 - 10000! takes 2.5 minutes to calculate
