@@ -15,66 +15,45 @@ std::vector<int>minus_one(std::vector<int>v, int pos){
     }
 }
 
+std::vector<int>flat(std::vector<int>&v,int c,int pos){
+    int t = v[pos]+c;
+    v[pos] = t%10;
+    c = t/10;
+    if(pos==0){
+        while(c!=0){
+            v.insert(v.begin(),c%10);
+            c = c/10;
+        }
+        return v;
+    }else{
+        return flat(v, c, pos-1);
+    }
+}
+
 std::vector<int>ftimes(std::vector<int> a,std::vector <int>b){
-    // times
     if (a.size()<b.size()){
         std::swap(a,b);
     }
-    int a_size = a.size(),b_size = b.size(); 
-    std::vector<std::vector<int>> res;
-    for (int  i = b_size-1; i>-1;i--){
-        int c = 0;
-        std::vector<int> tmp;
-        for (int  j = a_size-1; j>-1;j--){
-            int t = b[i]*a[j]+c;
-            int r = t%10;
-            c = t/10;
-            tmp.insert(tmp.begin(),r);
-        }
-        while(c>0){
-            tmp.insert(tmp.begin(),c%10);
-            c = c/10;
-        }
-        res.push_back(tmp);
-    }
-
-    for(int i = 1;i<res.size();i++){
-        for(int j =0;j<i;j++){
-            res[i].push_back(0);
-        }
-    }
-// add
-    int max_length = 0;
-    int vec_size = res.size();
-    for(int i =0;i<vec_size;i++){
-        if(res[i].size()>max_length){
-            max_length = res[i].size();
-        }
-    }
-    
-    for(int i =0;i<vec_size;i++){
-            while(res[i].size()!=max_length){
-                res[i].insert(res[i].begin(),0);
+    std::vector<int>res;
+    for(int i=0;i<b.size();i++){
+        if(i==0){
+            for(int j=b.size()-1;j>i;j--){
+                res.push_back(0);
             }
-    }
-    std::vector<int> f_res;
-    int c = 0;
-    for (int j = max_length-1;j>-1;j--){
-        int t = 0;
-        int r = 0;
-        for(int i = 0;i<vec_size;i++){
-            t+=res[i][j];
+            for(int j=a.size()-1;j>-1;j--){
+                res.insert(res.begin(),a[j]*b[i]);
+            }
+            flat(res,0,res.size()-1);
+        }else{
+            for(int j=a.size()-1;j>-1;j--){
+                res[res.size()-(b.size()-i)+(j- a.size()+1)] = a[j]*b[i]+res[res.size()-(b.size()-i)+(j- a.size()+1)];
+            }
+            // more likely to get overflow when put outside for loop, but much faster
+            flat(res,0,res.size()-1);
+
         }
-        t = t+c;
-        c = t/10;
-        r = t%10;
-        f_res.insert(f_res.begin(),r);
     }
-    while(c>0){
-        f_res.insert(f_res.begin(),c%10);
-        c = c /10;
-    }
-    return f_res;
+    return res;
 }
 
 
