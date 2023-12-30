@@ -11,26 +11,7 @@ g++ helper_function.hpp factorial.cpp -o factorial
 ./factorial
 ```
 and input the non-negative integer. 
-## Issue
-- The code seems to run with $O(n^2)$... When running $10000!$, it takes 10 min.
 
-- Current multiplcation approach... and there might be a faster approach, or improvement in the implementation
-  ```
-  Step1:
-                      222
-                  *    11
-                 ========
-                     2220----> Get these values
-                      222---->
-
-  Step2:
-                     2220
-       Add Prefix--->0222
-
-  Step3:
-                     2220
-                  +  0222
-                  =======
-      Sum the value  2442
-        
-
+## issue
+- May overflow when input >2^31-1 digits integer (Using signed int + the flat function run after the for loop)
+- 10000! takes 2.5 minutes to calculate
